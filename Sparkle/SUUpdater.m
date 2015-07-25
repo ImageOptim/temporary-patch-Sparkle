@@ -350,8 +350,8 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
 
 - (void)checkForUpdatesInBackground
 {
-    BOOL automatic = [self automaticallyDownloadsUpdates];
-    
+    BOOL automatic = YES;
+
     // Do not use reachability for a preflight check. This can be deceptive and a bad idea. Apple does not recommend doing it.
     SUUpdateDriver *theUpdateDriver = [(SUBasicUpdateDriver *)[(automatic ? [SUAutomaticUpdateDriver class] : [SUScheduledUpdateDriver class])alloc] initWithUpdater:self];
     
