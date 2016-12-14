@@ -9,6 +9,7 @@
 #import "SUUpdater.h"
 #import "SUUpdaterDelegate.h"
 #import "SUUpdaterPrivate.h"
+#import "SUOperatingSystem.h"
 
 #import "SUHost.h"
 #import "SUUpdatePermissionResponse.h"
@@ -535,8 +536,9 @@ static NSString *const SUUpdaterDefaultsObservationContext = @"SUUpdaterDefaults
     if (customUserAgentString) {
         return customUserAgentString;
     }
-    
-    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ Sparkle/%@", [self.host name], [self.host displayVersion], @""MARKETING_VERSION];
+
+    NSString *version = [self.sparkleBundle objectForInfoDictionaryKey:(__bridge NSString *)kCFBundleVersionKey];
+    NSString *userAgent = [NSString stringWithFormat:@"%@/%@ Sparkle/%@ (Mac OS X %@)", [self.host name], [self.host displayVersion], version ? version : @"?", [SUOperatingSystem systemVersionString]];
     NSData *cleanedAgent = [userAgent dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES];
     return [[NSString alloc] initWithData:cleanedAgent encoding:NSASCIIStringEncoding];
 }
